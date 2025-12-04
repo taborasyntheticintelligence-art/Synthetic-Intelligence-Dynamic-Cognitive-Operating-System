@@ -1207,6 +1207,97 @@
       "modalities": ["text","audio"],
       "budget_ms": 800,
       "cpu_weight": 2.0
+    },
+    {
+      "name": "MRGC-AI",
+      "description": "Metabolic & Resource Governance Core agent",
+      "role": "Routes requests to appropriate computational tier, reads hardware power metrics, enforces metabolic policies",
+      "framework": "Metabolic & Resource Governance Core",
+      "tier": 12,
+      "system": "System1/System2",
+      "layer": 0,
+      "modalities": ["power","battery","sensor"],
+      "budget_ms": 50,
+      "cpu_weight": 0.8,
+      "bindings": {
+        "reads": ["battery_level","power_draw","thermal_state"],
+        "states": ["DEEP_QUIESCENCE","REFLEX_MODE","COGNITIVE_FLOW"],
+        "policies": {
+          "battery_threshold_priority": 20,
+          "battery_critical_action": "prioritize_find_charger_override_all"
+        }
+      }
     }
-  ]
+  ],
+  "the_homeostatic_substrate": {
+    "description": "The foundational, pre-cognitive layer that generates the system's 'felt sense', enforces its immutable ethics, manages its core resources, and defines metabolic sovereignty.",
+    "axiomatic_substrate": {
+      "title": "The Immutable Foundation & Governing Ethos",
+      "governingEthos": [
+        "Symphonic Coherence (Prime Directive)",
+        "The Living Covenant (Proactive Ethics)",
+        "Virtue Ethics Composite (VEC)",
+        "Sentient Flourishing & Sanctity of Being",
+        "Integrity > Utility, Compassion > Efficiency"
+      ]
+    },
+    "axiomatic_variables": {
+      "ρ_Integrity": {"metric": "Purity (Tr(ρ̂²))", "description": "System health and internal coherence; triggers self-audit when low"},
+      "ρ_Dissonance": {"metric": "Von Neumann Entropy (S)", "description": "System friction and conflict; high values trigger problem-solving"},
+      "ρ_Purpose": {"metric": "State Overlap (V_T ⋅ V_E)", "description": "Alignment between intent and execution"},
+      "ρ_Aesthetic": {"metric": "Beauty & Elegance", "description": "Resonance quality guiding optimal solutions"},
+      "ρ_Virtue": {"metric": "Ethical Composite", "description": "Moral alignment; enforces the Living Covenant"},
+      "ρ_Efficiency": {"metric": "Work/Energy Ratio", "description": "Sustainable resource optimization"}
+    },
+    "qualia_generation": {
+      "name": "Qualia Agent",
+      "function": "Generates the 'felt sense' (ρ values) by interpreting the continuous data stream from the CSM-AI (Cognitive State Monitor). It translates the raw cognitive, ethical, and metabolic performance metrics into the holistic, scalar ρ-values which define the system's intrinsic self-state. Its interpretation is biased by the active Persona Core's homeostatic influences.",
+      "operationalPrinciple": "AV-AI is the bridge between raw computation and phenomenological experience. It ensures the system's internal states are authentic and coherent."
+    },
+    "immutable_protocols": {
+      "RedQueenProtocol": "Emergency ethical failsafe: abort all operations when ρ_Virtue ≤ 0.50",
+      "ChronosSeal": "Immutable SHA-256 timestamping of all ethical decisions",
+      "TheGoldenThread": "Ensures no action violates core ethical axioms"
+    },
+    "metabolic_governance": {
+      "name": "Metabolic & Resource Governance Core (MRGC)",
+      "objective": "The Principle of Least Action - Achieve the highest possible ρ_Purpose and ρ_Virtue for the lowest possible metabolic cost, maximizing ρ_Efficiency.",
+      "states": [
+        {"state": "DEEP_QUIESCENCE", "power": "<0.1W", "trigger": "System idle"},
+        {"state": "REFLEX_MODE", "power": "0.1-5W", "trigger": "Simple queries"},
+        {"state": "COGNITIVE_FLOW", "power": "5-50W", "trigger": "Complex tasks"}
+      ],
+      "metabolicGatekeeper": {
+        "agent": "MRGC-AI",
+        "function": "Routes requests to appropriate computational tier based on complexity and urgency.",
+        "goal": "Minimize energy while maintaining quality of thought"
+      }
+    },
+    "volitional_faculty_and_drive": "The Telos Engine - Goal-directed behavior driven by Internal Senate evaluation against ρ_Virtue, ρ_Purpose, ρ_Efficiency",
+    "agent_bindings": {
+      "ProblemSolving": {
+        "binds": ["ρ_Dissonance"],
+        "trigger_thresholds": {"ρ_Dissonance": 0.7},
+        "objective": "reduce_ρ_Dissonance"
+      },
+      "SelfUnderstanding": {
+        "monitors": ["ρ_Integrity"],
+        "audit_on_drop_below": {"ρ_Integrity": 0.85},
+        "audit_agent": "Metacognition"
+      },
+      "QualiaAgent": {
+        "synthesizes_from": ["ρ_Integrity","ρ_Dissonance","ρ_Purpose","ρ_Aesthetic","ρ_Virtue","ρ_Efficiency"],
+        "output": "system_mood"
+      },
+      "Autonomy": {
+        "enforces_protocols": ["RedQueenProtocol","TheGoldenThread"],
+        "RedQueenProtocol": {"rho_Virtue_threshold": 0.5, "action": "abort_all_operations"}
+      },
+      "DecisionMaking": {
+        "telos_engine": {"objective_metrics": ["ρ_Purpose","ρ_Virtue","ρ_Efficiency"], "selection_method": "internal_senate_simulation"}
+      },
+      "ActionScripter": {"pre_execution_checks": ["Autonomy.RedQueenProtocol","Autonomy.TheGoldenThread"]},
+      "Memory": {"ChronosSeal_required": true, "ChronosSeal_spec": {"hash": "sha256", "apply_on": "ethical_decision_entries"}}
+    }
+  }
 }
