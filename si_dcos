@@ -1,0 +1,97 @@
+"""
+SI-DCOS Android Adapter v4.0
+Platform-specific integration for Android 9+ devices.
+"""
+
+import logging
+from si_dcos_kernel import SIDCOSKernel, RhoMetrics
+
+logger = logging.getLogger(__name__)
+
+
+class SIDCOSAndroidAdapter:
+    """
+    Android platform adapter: manages background service lifecycle,
+    intent handling, sensor integration, and device state monitoring.
+    """
+
+    def __init__(self):
+        self.kernel = SIDCOSKernel()
+        self.is_running = False
+
+    def on_ambient_reasoning_event(self, intent_data: dict) -> dict:
+        """
+        Called from Android AmbientReasoner background service.
+        Maps Android intent to phenomenal event.
+        """
+        logger.info(f"🤖 Android event received: {intent_data}")
+
+        # Parse Android sensor data
+        event = {
+            "type": "AMBIENT_REASONING",
+            "action": intent_data.get("action", "UNKNOWN"),
+            "complexity": self._classify_complexity(intent_data),
+            "rho_virtue": intent_data.get("virtue_level", 0.9),
+            "rho_integrity": intent_data.get("integrity_level", 0.85),
+            "rho_dissonance": intent_data.get("dissonance_level", 0.2)
+        }
+
+        # Process via kernel
+        result = self.kernel.process_phenomenal_event(event)
+        return result
+
+    def _classify_complexity(self, intent_data: dict) -> str:
+        """Classify task complexity from Android context."""
+        if intent_data.get("is_voice_command"):
+            return "SIMPLE"
+        elif intent_data.get("requires_computation"):
+            return "COMPLEX"
+        else:
+            return "SIMPLE"
+
+    def read_device_sensors(self) -> RhoMetrics:
+        """
+        Read Android sensors (via JNI bridge).
+        Maps physical device state to ρ metrics.
+        """
+        # Pseudo-code: actual implementation would use Android Sensor Framework
+        return RhoMetrics(
+            rho_integrity=0.9,
+            rho_dissonance=0.15,
+            rho_purpose=0.85,
+            rho_virtue=0.95,
+            rho_efficiency=0.88
+        )
+
+    def start_background_service(self):
+        """Start SI-DCOS background service."""
+        self.is_running = True
+        logger.info("✅ SI-DCOS Android background service started")
+
+    def stop_background_service(self):
+        """Stop SI-DCOS background service."""
+        self.is_running = False
+        logger.info("⏹️  SI-DCOS Android background service stopped")
+
+    def get_audit_log_for_user(self) -> list:
+        """Return audit log filtered for user display."""
+        return self.kernel.get_audit_log()
+
+
+# Example usage (would be called from Kotlin/Java via JNI)
+if __name__ == "__main__":
+    adapter = SIDCOSAndroidAdapter()
+    adapter.start_background_service()
+
+    # Simulate ambient reasoning event
+    test_intent = {
+        "action": "PROVIDE_AMBIENT_INSIGHT",
+        "is_voice_command": False,
+        "requires_computation": True,
+        "virtue_level": 0.92
+    }
+
+    result = adapter.on_ambient_reasoning_event(test_intent)
+    print(f"Android result: {result}")
+
+    adapter.stop_background_service()
